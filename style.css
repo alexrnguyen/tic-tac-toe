@@ -1,0 +1,26 @@
+/* || General Styles */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex: 1;
+}
+
+:root {
+  --border: 3px solid black;
+  --min-square-size: 100px;
+}
+
+/* || Gameboard */
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: var(--border);
+}
+
+.square {
+  border: var(--border);
+  min-width: var(--min-square-size);
+  min-height: var(--min-square-size);
+}
