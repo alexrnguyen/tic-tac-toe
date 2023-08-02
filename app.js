@@ -17,16 +17,33 @@ const gameboard = (() => {
       const square = squareFactory(i, "");
       board.push(square);
     }
+    console.log(board);
   };
 
   const placeMarker = (index, marker) => {
     // Place marker on gameboard (displayController ensures the move is valid before passing the move to this function)
+    console.log("Marker placed");
     board[index].marker = marker;
   };
+
+  const threeInARow = () => {
+    return false;
+  };
+
+  const allSquaresFilled = () => {
+    return board.every((square) => square.marker !== "");
+  };
+
+  const resetBoard = () => {
+    board = [];
+  };
+
   return {
     createBoard,
     placeMarker,
-    // ...
+    threeInARow,
+    allSquaresFilled,
+    resetBoard,
   };
 })();
 
@@ -35,6 +52,7 @@ const displayController = (() => {
   const player1 = playerFactory("Player 1", "X");
   const player2 = playerFactory("Player 2", "O");
   const restartButton = document.querySelector(".restart-button");
+  const squares = document.querySelectorAll(".square");
 
   const startGame = () => {
     gameboard.createBoard();
@@ -42,16 +60,13 @@ const displayController = (() => {
   };
 
   const playGame = () => {
-    const squares = document.querySelectorAll(".square");
     let currentPlayer = player1;
-    console.log("Turn started");
     squares.forEach((square) => {
       square.addEventListener("click", () => {
-        // Verify square is valid
-        // ...
-        gameboard.placeMarker(square.dataset.index, currentPlayer.marker);
-        square.textContent = currentPlayer.marker;
-
+        playTurn(currentPlayer, square);
+        if (checkIfGameOver()) {
+          reportWinner();
+        }
         if (currentPlayer === player1) {
           currentPlayer = player2;
         } else {
@@ -61,46 +76,34 @@ const displayController = (() => {
     });
   };
 
-  const playTurn = (player) => {
-    // ...
+  const playTurn = (player, selectedSquare) => {
+    // Players can only choose empty squares
+    if (selectedSquare.textContent === "") {
+      gameboard.placeMarker(selectedSquare.dataset.index, player.marker);
+      selectedSquare.textContent = player.marker;
+    }
   };
 
-  const checkForWinner = () => {
-    if (checkRows() || checkColumns() || checkDiagonals()) {
+  const checkIfGameOver = () => {
+    if (gameboard.threeInARow()) {
       return true;
-    } else if (checkForTie()) {
+    } else if (gameboard.allSquaresFilled()) {
       return true;
     } else {
       return false;
     }
   };
 
-  const checkRows = () => {
-    return false;
-    // ...
-  };
-
-  const checkColumns = () => {
-    return false;
-    // ...
-  };
-
-  const checkDiagonals = () => {
-    return false;
-    // ...
-  };
-
-  const checkForTie = () => {
-    gameboard.board.every(
-      (square) => square.marker === "X" || square.marker === "O"
-    );
-  };
-
   const reportWinner = () => {
-    // ...
+    console.log("Game Over!");
+    squares.forEach((square) => square.removeEventListener);
   };
 
-  restartButton.addEventListener("click", startGame);
+  restartButton.addEventListener("click", () => {
+    gameboard.resetBoard();
+    squares.forEach((square) => (square.textContent = ""));
+    startGame();
+  });
   return {
     startGame,
     playGame,
