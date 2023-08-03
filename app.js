@@ -44,8 +44,11 @@ const displayController = (() => {
   const player1 = playerFactory("Player 1", "X");
   const player2 = playerFactory("Player 2", "O");
   let currentPlayer = player1;
-  const restartButton = document.querySelector(".restart-button");
+  const restartButtons = document.querySelectorAll(".restart-button");
   const squares = document.querySelectorAll(".square");
+  const modal = document.querySelector(".modal");
+  const modalText = document.querySelector(".modal-text");
+  const overlay = document.querySelector(".overlay");
 
   const startGame = () => {
     gameboard.createBoard();
@@ -124,10 +127,19 @@ const displayController = (() => {
 
   const reportWinner = (winningPlayer) => {
     console.log(`${winningPlayer.name} Wins!`);
+    modalText.textContent = `${winningPlayer.name} Wins!`;
+    toggleModal();
   };
 
   const reportTie = () => {
     console.log("It's a Tie!");
+    modalText.textContent = "It's a Tie!";
+    toggleModal();
+  };
+
+  const toggleModal = () => {
+    modal.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
   };
 
   // Event listeners
@@ -135,10 +147,17 @@ const displayController = (() => {
     square.addEventListener("click", () => handleClick(square));
   });
 
-  restartButton.addEventListener("click", () => {
-    gameboard.resetBoard();
-    squares.forEach((square) => (square.textContent = ""));
-    startGame();
+  restartButtons.forEach((restartButton) =>
+    restartButton.addEventListener("click", () => {
+      gameboard.resetBoard();
+      squares.forEach((square) => (square.textContent = ""));
+      startGame();
+    })
+  );
+
+  restartButtons[1].addEventListener("click", () => {
+    modal.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
   });
   return {
     startGame,
