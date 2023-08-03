@@ -11,6 +11,8 @@ const playerFactory = (name, marker) => {
 // Stores every move made by both players
 const gameboard = (() => {
   let _board = [];
+
+  // Create a board with 9 empty squares
   const createBoard = () => {
     for (let i = 0; i < 9; i++) {
       const square = squareFactory(i, "");
@@ -23,10 +25,12 @@ const gameboard = (() => {
     _board[index].marker = marker;
   };
 
+  // Getter for board
   const getBoard = () => {
     return _board;
   };
 
+  // Reset the state of the board
   const resetBoard = () => {
     _board = [];
   };
@@ -44,18 +48,22 @@ const displayController = (() => {
   const player1 = playerFactory("Player 1", "X");
   const player2 = playerFactory("Player 2", "O");
   let currentPlayer = player1;
+
+  // DOM Elements
   const restartButtons = document.querySelectorAll(".restart-button");
   const squares = document.querySelectorAll(".square");
   const modal = document.querySelector(".modal");
   const modalText = document.querySelector(".modal-text");
   const overlay = document.querySelector(".overlay");
 
+  // Starts a game of Tic-Tac-Toe with an empty board.
   const startGame = () => {
     gameboard.createBoard();
     currentPlayer = player1;
     updateDisplay(currentPlayer);
   };
 
+  // Handles square clicks
   const handleClick = (square) => {
     playTurn(currentPlayer, square);
     checkIfGameOver();
@@ -67,6 +75,7 @@ const displayController = (() => {
     updateDisplay(currentPlayer);
   };
 
+  // Marks a square with the given player's marker
   const playTurn = (player, selectedSquare) => {
     // Players can only choose empty squares while the game is still being played (no winner)
     const winningPlayer = checkForWinner();
@@ -76,11 +85,13 @@ const displayController = (() => {
     }
   };
 
+  // Updates the display to show that it is the next player's turn
   const updateDisplay = (currentPlayer) => {
     const playerTurnDisplay = document.querySelector(".player-turn");
     playerTurnDisplay.textContent = `${currentPlayer.name}\'s Turn`;
   };
 
+  // Checks if a player has won or if all squares have been filled (tie)
   const checkIfGameOver = () => {
     const winningPlayer = checkForWinner();
     if (winningPlayer !== null) {
@@ -90,6 +101,7 @@ const displayController = (() => {
     }
   };
 
+  // Checks if either player has three markers in a row
   const checkForWinner = () => {
     const winConditions = [
       [0, 3, 6], //Columns
@@ -121,22 +133,26 @@ const displayController = (() => {
     return null;
   };
 
+  // Checks if all squares are filled
   const checkForTie = () => {
     return gameboard.getBoard().every((square) => square.marker !== "");
   };
 
+  // Display a modal showing the winning player
   const reportWinner = (winningPlayer) => {
     console.log(`${winningPlayer.name} Wins!`);
     modalText.textContent = `${winningPlayer.name} Wins!`;
     toggleModal();
   };
 
+  // Display a modal showing that the game was a tie
   const reportTie = () => {
     console.log("It's a Tie!");
     modalText.textContent = "It's a Tie!";
     toggleModal();
   };
 
+  // Show the modal if it is hidden, otherwise hide the modal
   const toggleModal = () => {
     modal.classList.toggle("hidden");
     overlay.classList.toggle("hidden");
@@ -155,6 +171,7 @@ const displayController = (() => {
     })
   );
 
+  // Toggle modal only for the restart button inside the modal
   restartButtons[1].addEventListener("click", () => {
     modal.classList.toggle("hidden");
     overlay.classList.toggle("hidden");
