@@ -3,8 +3,6 @@
 ## To Do
 
 - Add Player VS AI mode (implement the minimax algorithm to create an unbeatable AI!)
-- Increase board size
-- Move board to the center of the page
 
 ## Acknowledgements
 

@@ -10,6 +10,7 @@ body {
   flex-direction: column;
   gap: 2rem;
   flex: 1;
+  overflow: auto;
 }
 
 :root {
@@ -32,29 +33,35 @@ h1,
 
 h1 {
   margin: 0;
+  letter-spacing: 0.5rem;
 }
 
 .player-turn {
-  font-size: 1.5rem;
+  font-size: 2rem;
+  letter-spacing: 0.25rem;
 }
 
 /* || Gameboard */
 .gameboard {
+  width: 60vh;
+  height: 60vh;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template: repeat(3, minmax(var(--min-square-size), 1fr)) / repeat(
+      3,
+      minmax(var(--min-square-size), 1fr)
+    );
   border: var(--border);
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .square {
   color: var(--marker-color);
   border: var(--border);
-  min-width: var(--min-square-size);
-  min-height: var(--min-square-size);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3rem;
+  font-size: 5em;
 }
 
 .square:hover {
@@ -89,6 +96,10 @@ h1 {
 
 .modal-text {
   font-size: 3rem;
+}
+
+.modal .restart-button {
+  border-color: black;
 }
 
 /* Source: https://www.freecodecamp.org/news/how-to-build-a-modal-with-javascript/ */
