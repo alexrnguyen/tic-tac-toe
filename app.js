@@ -51,8 +51,10 @@ const displayController = (() => {
 
   // DOM Elements
   const restartButtons = document.querySelectorAll(".restart-button");
+  const playerNameForm = document.getElementById("player-name-form");
   const squares = document.querySelectorAll(".square");
-  const modal = document.querySelector(".modal");
+  const startGameModal = document.querySelector(".start-of-game");
+  const endGameModal = document.querySelector(".end-of-game");
   const modalText = document.querySelector(".modal-text");
   const overlay = document.querySelector(".overlay");
 
@@ -67,11 +69,6 @@ const displayController = (() => {
   const handleClick = (square) => {
     playTurn(currentPlayer, square);
     checkIfGameOver();
-    if (currentPlayer === player1) {
-      currentPlayer = player2;
-    } else {
-      currentPlayer = player1;
-    }
     updateDisplay(currentPlayer);
   };
 
@@ -83,6 +80,12 @@ const displayController = (() => {
       gameboard.setSquare(selectedSquare.dataset.index, player.marker);
       selectedSquare.textContent = player.marker;
       selectedSquare.classList.add();
+
+      if (player === player1) {
+        currentPlayer = player2;
+      } else {
+        currentPlayer = player1;
+      }
     }
   };
 
@@ -143,23 +146,34 @@ const displayController = (() => {
   const reportWinner = (winningPlayer) => {
     console.log(`${winningPlayer.name} Wins!`);
     modalText.textContent = `${winningPlayer.name} Wins!`;
-    toggleModal();
+    toggleModal(endGameModal);
   };
 
   // Display a modal showing that the game was a tie
   const reportTie = () => {
     console.log("It's a Tie!");
     modalText.textContent = "It's a Tie!";
-    toggleModal();
+    toggleModal(endGameModal);
   };
 
   // Show the modal if it is hidden, otherwise hide the modal
-  const toggleModal = () => {
+  const toggleModal = (modal) => {
     modal.classList.toggle("hidden");
     overlay.classList.toggle("hidden");
   };
 
   // Event listeners
+  playerNameForm.onsubmit = (event) => {
+    const player1Name = document.getElementById("player1-name").value;
+    const player2Name = document.getElementById("player2-name").value;
+
+    player1.name = player1Name;
+    player2.name = player2Name;
+    updateDisplay(currentPlayer);
+    toggleModal(startGameModal);
+    event.preventDefault();
+  };
+
   squares.forEach((square) => {
     square.addEventListener("click", () => handleClick(square));
   });
@@ -174,12 +188,11 @@ const displayController = (() => {
 
   // Toggle modal only for the restart button inside the modal
   restartButtons[1].addEventListener("click", () => {
-    modal.classList.toggle("hidden");
+    endGameModal.classList.toggle("hidden");
     overlay.classList.toggle("hidden");
   });
   return {
     startGame,
   };
 })();
-
 displayController.startGame();

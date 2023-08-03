@@ -26,11 +26,24 @@
     </div>
 
     <button class="restart-button">Restart</button>
-    <div class="modal hidden">
+    <div class="modal start-of-game">
+        <form action="/" method="post" id="player-name-form">
+            <div>
+                <label for="player1-name">Player 1</label>
+                <input type="text" name="player1Name" id="player1-name" placeholder="Enter Name" required>
+            </div>
+            <div>
+                <label for="player2-name">Player 2</label>
+                <input type="text" name="player2Name" id="player2-name" placeholder="Enter Name" required>
+            </div>
+            <button type="submit" class="start-button">Start Game</button>
+        </form>
+    </div>
+    <div class="modal end-of-game hidden">
         <span class="modal-text">Test</span>
         <button class="restart-button">Restart</button>
     </div>
-    <div class="overlay hidden"></div>
+    <div class="overlay"></div>
     <script src="app.js"></script>
 </body>
 </html>

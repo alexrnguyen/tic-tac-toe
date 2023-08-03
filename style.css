@@ -68,7 +68,7 @@ h1 {
   background-color: var(--hover-color);
 }
 
-.restart-button {
+button {
   font-size: 1rem;
   background-color: var(--button-color);
   color: black;
@@ -87,18 +87,27 @@ h1 {
   transform: translate(-50%, -50%);
   border-radius: 10px;
   padding: 1rem;
-  width: 450px;
-  height: 20%;
   z-index: 2;
   display: grid;
   place-items: center;
+}
+
+.start-of-game {
+  width: 450px;
+  height: 30%;
+}
+
+.end-of-game {
+  width: 450px;
+  height: 20%;
 }
 
 .modal-text {
   font-size: 3rem;
 }
 
-.modal .restart-button {
+.modal .restart-button,
+.start-button {
   border-color: black;
 }
 
