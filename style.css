@@ -1,5 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap");
+
 /* || General Styles */
 body {
+  background-color: var(--background-color);
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,12 +13,29 @@ body {
 }
 
 :root {
-  --border: 3px solid black;
+  --background-color: #0c120c;
+  --marker-color: #c20114;
+  --hover-color: #f9c80e;
+  --header-color: #c20114;
+  --button-color: #f9c80e;
+  --border: 3px solid white;
   --min-square-size: 100px;
+}
+
+/* || Headers */
+
+h1,
+.player-turn {
+  color: var(--header-color);
+  font-size: 3rem;
 }
 
 h1 {
   margin: 0;
+}
+
+.player-turn {
+  font-size: 1.5rem;
 }
 
 /* || Gameboard */
@@ -22,9 +43,11 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border: var(--border);
+  border-radius: 5px;
 }
 
 .square {
+  color: var(--marker-color);
   border: var(--border);
   min-width: var(--min-square-size);
   min-height: var(--min-square-size);
@@ -32,6 +55,19 @@ h1 {
   justify-content: center;
   align-items: center;
   font-size: 3rem;
+}
+
+.square:hover {
+  background-color: var(--hover-color);
+}
+
+.restart-button {
+  font-size: 1rem;
+  background-color: var(--button-color);
+  color: black;
+  padding: 1rem 2rem;
+  border: 3px solid white;
+  border-radius: 10px;
 }
 
 /* || Modal */
@@ -49,6 +85,10 @@ h1 {
   z-index: 2;
   display: grid;
   place-items: center;
+}
+
+.modal-text {
+  font-size: 3rem;
 }
 
 /* Source: https://www.freecodecamp.org/news/how-to-build-a-modal-with-javascript/ */

@@ -45,8 +45,8 @@ const gameboard = (() => {
 
 // Contains all game logic
 const displayController = (() => {
-  const player1 = playerFactory("Player 1", "X");
-  const player2 = playerFactory("Player 2", "O");
+  const player1 = playerFactory("Player X", "X");
+  const player2 = playerFactory("Player O", "O");
   let currentPlayer = player1;
 
   // DOM Elements
@@ -82,6 +82,7 @@ const displayController = (() => {
     if (selectedSquare.textContent === "" && winningPlayer === null) {
       gameboard.setSquare(selectedSquare.dataset.index, player.marker);
       selectedSquare.textContent = player.marker;
+      selectedSquare.classList.add();
     }
   };
 
