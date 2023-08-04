@@ -43,8 +43,8 @@ h1 {
 
 /* || Gameboard */
 .gameboard {
-  width: 60vh;
-  height: 60vh;
+  width: 50vh;
+  height: 50vh;
   display: grid;
   grid-template: repeat(3, minmax(var(--min-square-size), 1fr)) / repeat(
       3,
@@ -93,8 +93,8 @@ button {
 }
 
 .start-of-game {
-  width: 450px;
-  height: 30%;
+  min-width: min(50vw, 450px);
+  min-height: 30%;
 }
 
 .end-of-game {

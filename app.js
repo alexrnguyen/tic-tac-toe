@@ -188,8 +188,8 @@ const displayController = (() => {
 
   // Toggle modal only for the restart button inside the modal
   restartButtons[1].addEventListener("click", () => {
-    endGameModal.classList.toggle("hidden");
-    overlay.classList.toggle("hidden");
+    toggleModal(endGameModal);
+    toggleModal(startGameModal);
   });
   return {
     startGame,
